@@ -4,7 +4,8 @@ public class Calendar {
     public static final int HOUR = 1 ;
 
     public static Calendar getInstance(){
-        return this;
+        Calendar c = new Calendar();
+        return c;
     }
     public int get(int hour){
         return hour;
