@@ -22,7 +22,7 @@ public class AlquilaCoches {
             LocalDate otroDia = inicio.plusDays((long)i);
 
             try {
-
+                //System.out.println(calendario.getCalendario()[0]);
                 if (calendario.es_festivo(otroDia)) {
 
                     precioTotal += (1+ porcentaje)*precioDia;

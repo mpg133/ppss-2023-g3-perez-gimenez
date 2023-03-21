@@ -4,9 +4,13 @@ public class AlquilaCochesTestable extends AlquilaCoches {
     IService servicio;
 
 
+    /*public AlquilaCochesTestable(CalendarioStub calendarioStub){
+        super();
+        calendario = calendarioStub;
+    }*/
 
     public void setCalendarioStub(CalendarioStub calendarioStub) {
-        super.calendario= calendarioStub;
+       calendario= calendarioStub;
 
     }
     @Override

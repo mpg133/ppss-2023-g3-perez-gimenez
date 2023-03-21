@@ -15,7 +15,7 @@ public class AlquilaCochesTest {
     int num_dias;
 
 
-    AlquilaCochesTestable testable = new AlquilaCochesTestable();
+
     Servicio servicio = new Servicio();
     Ticket ticket;
     @Test
@@ -29,9 +29,11 @@ public class AlquilaCochesTest {
         int[] dias=new int[]{-1};
         calendario.setFestivos(dias);
         servicio = new ServicioStub(10);
-        testable.setServicio(servicio);
-        calendario = new CalendarioStub();
+        AlquilaCochesTestable testable = new AlquilaCochesTestable();
         testable.setCalendarioStub(calendario);
+        testable.setServicio(servicio);
+        //calendario = new CalendarioStub();
+
         assertAll("grupoTestC1",
                 ()->assertEquals(resultado_esperado.get(),
                 assertDoesNotThrow(
@@ -50,12 +52,15 @@ public class AlquilaCochesTest {
         Ticket resultado_esperado=new Ticket();
         Ticket resultado_obtenido=resultado_esperado;
         resultado_esperado.setPrecio_final((float)62.5);
-
         calendario.setFestivos(dias);
+
         servicio = new ServicioStub(10);
-        testable.setServicio(servicio);
-        calendario = new CalendarioStub();
+        //AlquilaCochesTestable testable = new AlquilaCochesTestable(calendario);
+        AlquilaCochesTestable testable = new AlquilaCochesTestable();
         testable.setCalendarioStub(calendario);
+        testable.setServicio(servicio);
+
+        //testable.setCalendarioStub(calendario);
 
         //System.out.println(testable.calendario.getCalendario()[0]);
         assertAll("grupoTestC1",
@@ -66,6 +71,25 @@ public class AlquilaCochesTest {
         );
 
     }
+    @Test
+    void calculaPrecioC3() {
+        tipo=TipoCoche.TURISMO;
+        LocalDate fecha = LocalDate.of(2023,4,17);
+        num_dias=8;
+        int[] dias= new int []{18,21,22};
+        calendario.setDiasExcepciones(dias);
 
+        servicio = new ServicioStub(10);
+
+        AlquilaCochesTestable testable = new AlquilaCochesTestable();
+        testable.setCalendarioStub(calendario);
+        testable.setServicio(servicio);
+
+        String msg_esperado = "Error	en	dia: 2023-04-18; Error	en	dia: 2023-04-21; Error	en	dia: 2023-04-22;";
+        MensajeException exception = assertThrows(MensajeException.class,
+                () -> testable.calculaPrecio(tipo,fecha,num_dias)
+        );
+
+    }
 
 }
